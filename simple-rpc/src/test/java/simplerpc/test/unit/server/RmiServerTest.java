@@ -7,9 +7,9 @@ import static org.mockito.Mockito.verify;
 import org.junit.Before;
 import org.junit.Test;
 
-import simplrpc.server.RmiServer;
+import simplrpc.server.RpcServer;
 import simplrpc.server.internal.ServerSocketManager;
-import simplrpc.shared.SimpleRmiException;
+import simplrpc.shared.SimpleRpcException;
 
 
 
@@ -23,7 +23,7 @@ public class RmiServerTest{
 
     }
 
-    class RmiServerUT extends RmiServer{
+    class RmiServerUT extends RpcServer{
 
         public RmiServerUT( int port ){
             super( port );
@@ -36,7 +36,7 @@ public class RmiServerTest{
     }
 
     private static final int NOT_USED_PORT = -1;
-    private RmiServer rmiServer;
+    private RpcServer rmiServer;
     private ServerSocketManager serverSocketManagerMock;
 
     @Before

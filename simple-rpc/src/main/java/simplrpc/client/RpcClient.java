@@ -5,7 +5,7 @@ import java.lang.reflect.Proxy;
 
 import simplrpc.client.internal.ClientInvocationHandler;
 import simplrpc.client.internal.ConnectionHandler;
-import simplrpc.shared.SimpleRmiException;
+import simplrpc.shared.SimpleRpcException;
 import simplrpc.shared.internal.HasImplementationRequest;
 import simplrpc.shared.internal.HasImplementationResponse;
 
@@ -14,7 +14,7 @@ import simplrpc.shared.internal.HasImplementationResponse;
 /**
  * Represents access to a RmiServer, through implementations of interfaces are provided.
  */
-public class RmiClient{
+public class RpcClient{
 
     private final String host;
     private final int port;
@@ -26,7 +26,7 @@ public class RmiClient{
      * @param host
      * @param port
      */
-    public RmiClient( String host, int port ){
+    public RpcClient( String host, int port ){
         this.host = host;
         this.port = port;
         connectionHandler = createConnectionHandler();
@@ -38,7 +38,7 @@ public class RmiClient{
             connectionHandler.connect();
         }
         catch( Exception e ){
-            throw new SimpleRmiException( e );
+            throw new SimpleRpcException( e );
         }
         return connectionHandler;
     }
@@ -58,7 +58,7 @@ public class RmiClient{
             return response.isHasImplementation();
         }
         catch( Exception e ){
-            throw new SimpleRmiException( e );
+            throw new SimpleRpcException( e );
         }
     }
 
@@ -69,14 +69,14 @@ public class RmiClient{
      * @return
      */
     public <T> T getImplementation( Class<T> interfaceClazz ){
-        if( !hasImplementation( interfaceClazz ) ) throw new SimpleRmiException( "Server has no implementation for this" );
+        if( !hasImplementation( interfaceClazz ) ) throw new SimpleRpcException( "Server has no implementation for this" );
         return createProxy( interfaceClazz );
     }
 
     @SuppressWarnings("unchecked")
     private <T> T createProxy( Class<T> interfaceClazz ){
         InvocationHandler invocationHandler = new ClientInvocationHandler( connectionHandler, interfaceClazz );
-        T proxy = ( T )Proxy.newProxyInstance( RmiClient.class.getClassLoader(), new Class[]{ interfaceClazz }, invocationHandler );
+        T proxy = ( T )Proxy.newProxyInstance( RpcClient.class.getClassLoader(), new Class[]{ interfaceClazz }, invocationHandler );
         return proxy;
     }
 

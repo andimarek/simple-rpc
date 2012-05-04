@@ -14,7 +14,7 @@ import simplrpc.server.internal.SingleConnectionHandler;
 /**
  * A server providing remote access to implementations of Interfaces.
  */
-public class RmiServer{
+public class RpcServer{
 
     private final int port;
 
@@ -30,14 +30,14 @@ public class RmiServer{
      * 
      * @param port
      */
-    public RmiServer( int port ){
+    public RpcServer( int port ){
         super();
         this.port = port;
         this.newSocketCallback = new NewSocketCallback(){
 
             @Override
             public void newSocketAccepted( Socket newSocket ){
-                RmiServer.this.newSocketAccepted( newSocket );
+                RpcServer.this.newSocketAccepted( newSocket );
             }
         };
         this.serverSocketManager = createServerSocketManager( port );

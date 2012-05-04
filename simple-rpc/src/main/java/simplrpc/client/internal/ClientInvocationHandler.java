@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import simplrpc.shared.SimpleRmiException;
-import simplrpc.shared.SimpleRmiIOException;
-import simplrpc.shared.SimpleRmiRemoteException;
+import simplrpc.shared.SimpleRpcException;
+import simplrpc.shared.SimpleRpcIOException;
+import simplrpc.shared.SimpleRpcRemoteException;
 import simplrpc.shared.internal.InvokeMethodRequest;
 import simplrpc.shared.internal.InvokeMethodResponse;
 
@@ -34,19 +34,19 @@ public class ClientInvocationHandler implements InvocationHandler{
                 case OK:
                     return response.getReturnValue();
                 case EXCEPTION:
-                    throw new SimpleRmiRemoteException( response.getExceptionToString() );
+                    throw new SimpleRpcRemoteException( response.getExceptionToString() );
                 default:
                     throw new RuntimeException();
             }
         }
-        catch( SimpleRmiException e ){
+        catch( SimpleRpcException e ){
             throw e;
         }
         catch( IOException ioException ){
-            throw new SimpleRmiIOException( ioException );
+            throw new SimpleRpcIOException( ioException );
         }
         catch( Throwable e ){
-            throw new SimpleRmiException( e );
+            throw new SimpleRpcException( e );
         }
 
     }

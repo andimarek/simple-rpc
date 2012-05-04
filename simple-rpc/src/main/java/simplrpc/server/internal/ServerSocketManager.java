@@ -5,7 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 
-import simplrpc.shared.SimpleRmiException;
+import simplrpc.shared.SimpleRpcException;
 
 
 
@@ -26,7 +26,7 @@ public class ServerSocketManager{
             serverSocket = createServerSocket();
         }
         catch( IOException e ){
-            throw new SimpleRmiException( e );
+            throw new SimpleRpcException( e );
         }
         Runnable runnable = new Runnable(){
 

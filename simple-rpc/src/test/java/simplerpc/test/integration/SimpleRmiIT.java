@@ -12,15 +12,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 import simplerpc.test.util.PortUtil;
-import simplrpc.client.RmiClient;
-import simplrpc.server.RmiServer;
+import simplrpc.client.RpcClient;
+import simplrpc.server.RpcServer;
 
 
 
 public class SimpleRmiIT{
 
-    private RmiServer rmiServer;
-    private RmiClient rmiClient;
+    private RpcServer rmiServer;
+    private RpcClient rmiClient;
 
     public interface Interface{
 
@@ -32,8 +32,8 @@ public class SimpleRmiIT{
     @Before
     public void setUp(){
         int port = PortUtil.getFreePort();
-        rmiServer = new RmiServer( port );
-        rmiClient = new RmiClient( "localhost", port );
+        rmiServer = new RpcServer( port );
+        rmiClient = new RpcClient( "localhost", port );
     }
 
     @After

@@ -4,7 +4,7 @@ import static org.mockito.Mockito.mock;
 
 import org.junit.Test;
 
-import simplrpc.client.RmiClient;
+import simplrpc.client.RpcClient;
 import simplrpc.client.internal.ConnectionHandler;
 
 
@@ -14,7 +14,7 @@ public class RmiClientTest{
     private static final String NOT_USED_HOST = "localhost";
     private static final int NOT_USED_PORT = -1;
 
-    public class RmiClientUT extends RmiClient{
+    public class RmiClientUT extends RpcClient{
 
         public RmiClientUT(){
             super( NOT_USED_HOST, NOT_USED_PORT );
@@ -27,7 +27,7 @@ public class RmiClientTest{
     }
 
     private final ConnectionHandler connectionHandlerMock = mock( ConnectionHandler.class );
-    private final RmiClient rmiClient = new RmiClientUT();
+    private final RpcClient rmiClient = new RmiClientUT();
 
     @Test(expected = NullPointerException.class)
     public void hasImpmenetationThrowsNullpointerWhenClassIsNull(){

@@ -12,9 +12,9 @@ import org.mockito.Mockito;
 
 import simplrpc.client.internal.ClientInvocationHandler;
 import simplrpc.client.internal.ConnectionHandler;
-import simplrpc.shared.SimpleRmiException;
-import simplrpc.shared.SimpleRmiIOException;
-import simplrpc.shared.SimpleRmiRemoteException;
+import simplrpc.shared.SimpleRpcException;
+import simplrpc.shared.SimpleRpcIOException;
+import simplrpc.shared.SimpleRpcRemoteException;
 import simplrpc.shared.internal.InvokeMethodResponse;
 import simplrpc.shared.internal.Request;
 import simplrpc.shared.internal.InvokeMethodResponse.Type;
@@ -34,7 +34,7 @@ public class ClientInvocationHandlerTest{
     private final ConnectionHandler connectionHandler = mock( ConnectionHandler.class );
     private final ClientInvocationHandler clientInvocationHandler = new ClientInvocationHandler( connectionHandler, Interface.class );
 
-    @Test(expected = SimpleRmiIOException.class)
+    @Test(expected = SimpleRpcIOException.class)
     public void simpleRmiIOExceptionThrown() throws Throwable{
 
         when( connectionHandler.sendRequest( Mockito.any( Request.class ) ) ).thenThrow( new IOException() );
@@ -44,7 +44,7 @@ public class ClientInvocationHandlerTest{
         clientInvocationHandler.invoke( impl, method, new Object[ 0 ] );
     }
 
-    @Test(expected = SimpleRmiException.class)
+    @Test(expected = SimpleRpcException.class)
     public void simpleRmiExceptionThrown() throws Throwable{
         when( connectionHandler.sendRequest( Mockito.any( Request.class ) ) ).thenThrow( new NoClassDefFoundError() );
 
@@ -53,7 +53,7 @@ public class ClientInvocationHandlerTest{
         clientInvocationHandler.invoke( impl, method, new Object[ 0 ] );
     }
 
-    @Test(expected = SimpleRmiRemoteException.class)
+    @Test(expected = SimpleRpcRemoteException.class)
     public void simpleRmiRemoteExceptionThrown() throws Throwable{
         InvokeMethodResponse failureResponse = new InvokeMethodResponse( null, "exeptionToString", Type.EXCEPTION );
         when( connectionHandler.sendRequest( Mockito.any( Request.class ) ) ).thenReturn( failureResponse );
